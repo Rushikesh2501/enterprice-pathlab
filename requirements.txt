@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+alembic
+aioodbc
+pyodbc
+pydantic
+pydantic-settings
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+chromadb
+google-generativeai
+PyPDF2
+pytest
+azure-storage-file-share
