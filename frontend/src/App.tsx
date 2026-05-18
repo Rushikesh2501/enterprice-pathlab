@@ -12,7 +12,20 @@ import { TestHistory } from './modules/test-history/TestHistory';
 import { Admin } from './modules/admin/Admin';
 
 function App() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<any>(() => {
+    const saved = localStorage.getItem('pathlab_user');
+    return saved ? JSON.parse(saved) : null;
+  });
+
+  const handleLoginSuccess = (userData: any) => {
+    setUser(userData);
+    localStorage.setItem('pathlab_user', JSON.stringify(userData));
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem('pathlab_user');
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -20,10 +33,10 @@ function App() {
         <Routes>
           {/* Public Routes */}
           {!user ? (
-            <Route path="*" element={<Login onLoginSuccess={(userData) => setUser(userData)} />} />
+            <Route path="*" element={<Login onLoginSuccess={handleLoginSuccess} />} />
           ) : (
             /* Protected Routes */
-            <Route element={<MainLayout user={user} onLogout={() => setUser(null)} />}>
+            <Route element={<MainLayout user={user} onLogout={handleLogout} />}>
               <Route path="/" element={<Dashboard />} />
               <Route path="/reports" element={<Reports />} />
               <Route path="/history" element={<TestHistory />} />

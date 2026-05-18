@@ -8,14 +8,14 @@ import {
   Box,
   Badge,
 } from '@mui/material';
-import { Notifications, Menu as MenuIcon } from '@mui/icons-material';
+import { Notifications, Menu as MenuIcon, Logout } from '@mui/icons-material';
 
 interface NavbarProps {
   user: any;
   onLogout: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ user, onLogout: _onLogout }) => {
+export const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
   return (
     <AppBar position="sticky" elevation={0} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
       <Toolbar>
@@ -38,7 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLogout: _onLogout }) => 
                 {user?.full_name || 'Guest User'}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Patient
+                {user?.role === 'admin' ? 'Admin' : 'Patient'}
               </Typography>
             </Box>
             <Avatar 
@@ -48,6 +48,19 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLogout: _onLogout }) => 
               {user?.full_name?.charAt(0) || 'G'}
             </Avatar>
           </Box>
+
+          <IconButton 
+            onClick={onLogout} 
+            color="error" 
+            sx={{ 
+              ml: 1, 
+              bgcolor: 'rgba(239, 68, 68, 0.08)', 
+              '&:hover': { bgcolor: 'rgba(239, 68, 68, 0.15)' } 
+            }}
+            title="Log Out"
+          >
+            <Logout fontSize="small" />
+          </IconButton>
         </Box>
       </Toolbar>
     </AppBar>
