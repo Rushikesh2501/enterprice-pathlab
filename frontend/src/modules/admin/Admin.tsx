@@ -32,6 +32,7 @@ import {
   Refresh
 } from '@mui/icons-material';
 import axios from 'axios';
+import { API_BASE_URL } from '../../services/api';
 
 interface AppointmentData {
   id: number;
@@ -74,7 +75,7 @@ export const Admin: React.FC = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/v1/admin/appointments');
+      const response = await axios.get(`${API_BASE_URL}/api/v1/admin/appointments`);
       setAppointments(response.data);
     } catch (err: any) {
       console.error(err);
@@ -147,7 +148,7 @@ export const Admin: React.FC = () => {
       formData.append('file', renamedFile);
 
       // 3. Dispatch to Azure SQL & Azure Files REST endpoint
-      await axios.post('http://127.0.0.1:8000/api/v1/admin/reports/upload', formData, {
+      await axios.post(`${API_BASE_URL}/api/v1/admin/reports/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

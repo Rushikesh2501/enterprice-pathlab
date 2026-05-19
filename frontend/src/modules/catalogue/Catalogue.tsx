@@ -17,6 +17,7 @@ import {
 import { Search, LocalHospital, Assignment, AttachMoney } from '@mui/icons-material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../../services/api';
 
 interface Package {
   id: number;
@@ -38,7 +39,7 @@ export const Catalogue = () => {
   const fetchPackages = async () => {
     try {
       // Fetching from our newly created backend endpoint
-      const response = await axios.get('http://127.0.0.1:8000/api/v1/catalogue/');
+      const response = await axios.get(`${API_BASE_URL}/api/v1/catalogue/`);
       setPackages(response.data);
     } catch (error) {
       console.error('Error fetching packages:', error);

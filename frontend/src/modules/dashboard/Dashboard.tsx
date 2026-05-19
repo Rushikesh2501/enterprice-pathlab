@@ -22,6 +22,7 @@ import {
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE_URL } from '../../services/api';
  
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -37,9 +38,9 @@ export const Dashboard = () => {
     const fetchDashboardData = async () => {
       try {
         const [reportsRes, testsRes, apptsRes] = await Promise.all([
-          axios.get('http://127.0.0.1:8000/api/v1/reports/'),
-          axios.get('http://127.0.0.1:8000/api/v1/test-history/'),
-          axios.get('http://127.0.0.1:8000/api/v1/appointments/')
+          axios.get(`${API_BASE_URL}/api/v1/reports/`),
+          axios.get(`${API_BASE_URL}/api/v1/test-history/`),
+          axios.get(`${API_BASE_URL}/api/v1/appointments/`)
         ]);
  
         const reports = reportsRes.data;

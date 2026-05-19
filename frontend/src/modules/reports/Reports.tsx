@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import { Description, Download, Visibility, Search, CalendarToday, Delete } from '@mui/icons-material';
 import axios from 'axios';
+import { API_BASE_URL } from '../../services/api';
 
 interface Report {
   id: number;
@@ -45,7 +46,7 @@ export const Reports = () => {
 
   const fetchReports = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/v1/reports/');
+      const response = await axios.get(`${API_BASE_URL}/api/v1/reports/`);
       setReports(response.data);
     } catch (error) {
       console.error('Error fetching reports:', error);
@@ -64,7 +65,7 @@ export const Reports = () => {
     setDeleting(true);
     setError('');
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/v1/reports/${reportToDelete.id}`);
+      await axios.delete(`${API_BASE_URL}/api/v1/reports/${reportToDelete.id}`);
       fetchReports();
       setDeleteConfirmOpen(false);
       setReportToDelete(null);

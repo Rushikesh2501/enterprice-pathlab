@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
@@ -9,17 +9,20 @@ from app.utils.azure_storage import download_user_report
 router = APIRouter()
 
 @router.get("/")
-async def get_reports(db: AsyncSession = Depends(get_db)):
+async def get_reports(request: Request, db: AsyncSession = Depends(get_db)):
     # In a real app, you would filter by current_user.id
     result = await db.execute(select(Report))
     reports = result.scalars().all()
+    
+    # Converts base_url to string (includes trailing slash)
+    base_url = str(request.base_url)
     
     return [
         {
             "id": r.id,
             "report_name": r.report_name,
-            # Dynamically route downloads through our secure backend proxy
-            "file_url": f"http://127.0.0.1:8000/api/v1/reports/{r.id}/download",
+            # Dynamically route downloads through our secure backend proxy based on current hosting domain
+            "file_url": f"{base_url}api/v1/reports/{r.id}/download",
             "report_date": r.report_date,
             "uploaded_at": r.uploaded_at
         } for r in reports

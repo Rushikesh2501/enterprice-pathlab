@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import { Science, CalendarToday, Description } from '@mui/icons-material';
 import axios from 'axios';
+import { API_BASE_URL } from '../../services/api';
 
 interface TestHistoryData {
   id: number;
@@ -26,7 +27,7 @@ export const TestHistory = () => {
 
   const fetchHistory = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/v1/test-history/');
+      const response = await axios.get(`${API_BASE_URL}/api/v1/test-history/`);
       // Sort by date descending
       const sorted = response.data.sort((a: any, b: any) => 
         new Date(b.test_date).getTime() - new Date(a.test_date).getTime()

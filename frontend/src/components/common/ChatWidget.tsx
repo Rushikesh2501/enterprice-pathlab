@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { Chat as ChatIcon, Close, Send, Science, SupportAgent } from '@mui/icons-material';
 import axios from 'axios';
+import { API_BASE_URL } from '../../services/api';
 
 interface Message {
   sender: 'user' | 'bot';
@@ -77,7 +78,7 @@ export const ChatWidget: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/v1/chatbot/chat', {
+      const response = await axios.post(`${API_BASE_URL}/api/v1/chatbot/chat`, {
         message: userMsg.text,
         patient_id: getPatientId()
       });

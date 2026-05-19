@@ -24,6 +24,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ConfirmationDialog } from '../../components/common/ConfirmationDialog';
 import { AppointmentCard } from './components/AppointmentCard';
 import { AppointmentDetailsModal } from './components/AppointmentDetailsModal';
+import { API_BASE_URL } from '../../services/api';
 
 interface Appointment {
   id: number;
@@ -96,7 +97,7 @@ export const Appointments = () => {
 
   const fetchPackages = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/v1/catalogue/');
+      const response = await axios.get(`${API_BASE_URL}/api/v1/catalogue/`);
       setPackages(response.data);
     } catch (error) {
       console.error('Error fetching packages:', error);
@@ -105,7 +106,7 @@ export const Appointments = () => {
 
   const fetchAppointments = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/v1/appointments/');
+      const response = await axios.get(`${API_BASE_URL}/api/v1/appointments/`);
       setAppointments(response.data);
     } catch (error) {
       console.error('Error fetching appointments:', error);
@@ -151,7 +152,7 @@ export const Appointments = () => {
     setDuplicateWarningOpen(false);
     setBookingLoading(true);
     try {
-      await axios.post('http://127.0.0.1:8000/api/v1/appointments/', {
+      await axios.post(`${API_BASE_URL}/api/v1/appointments/`, {
         package_ids: selectedPackages,
         appointment_date: date,
         appointment_time: time + ":00",
@@ -181,7 +182,7 @@ export const Appointments = () => {
   const confirmCancelAppointment = async () => {
     setCancelConfirmOpen(false);
     try {
-      await axios.put(`http://127.0.0.1:8000/api/v1/appointments/${selectedAppointment?.id}/cancel`);
+      await axios.put(`${API_BASE_URL}/api/v1/appointments/${selectedAppointment?.id}/cancel`);
       setDetailsOpen(false);
       fetchAppointments();
     } catch (err) {
@@ -194,7 +195,7 @@ export const Appointments = () => {
   const confirmDeleteAppointment = async () => {
     setDeleteConfirmOpen(false);
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/v1/appointments/${appointmentToDelete?.id}`);
+      await axios.delete(`${API_BASE_URL}/api/v1/appointments/${appointmentToDelete?.id}`);
       fetchAppointments();
     } catch (err) {
       console.error("Failed to delete appointment", err);
