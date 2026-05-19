@@ -13,4 +13,4 @@ chromadb
 google-generativeai
 PyPDF2
 pytest
-azure-storage-file-share
+azure-storage-blob

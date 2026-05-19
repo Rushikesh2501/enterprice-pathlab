@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, CssBaseline } from '@mui/material';
 import { Sidebar } from './Sidebar';
 import { Navbar } from './Navbar';
+import { ChatWidget } from '../common/ChatWidget';
 import { Outlet } from 'react-router-dom';
 
 interface MainLayoutProps {
@@ -22,6 +23,9 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ user, onLogout }) => {
           <Outlet />
         </Box>
       </Box>
+
+      {/* Floating Chatbot Widget */}
+      <ChatWidget />
     </Box>
   );
 };

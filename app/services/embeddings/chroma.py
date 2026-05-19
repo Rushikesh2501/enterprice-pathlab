@@ -27,6 +27,18 @@ class ChromaService:
             ids=[f"report_{report_id}_{uuid.uuid4().hex[:8]}"]
         )
 
+    def add_report_chunks(self, user_id: int, report_id: int, chunks: list[str]):
+        """Store multiple chunks of report text in ChromaDB"""
+        if not chunks:
+            return
+        ids = [f"report_{report_id}_chunk_{i}_{uuid.uuid4().hex[:6]}" for i, _ in enumerate(chunks)]
+        metadatas = [{"user_id": user_id, "report_id": report_id, "chunk_index": i} for i, _ in enumerate(chunks)]
+        self.reports_collection.add(
+            documents=chunks,
+            metadatas=metadatas,
+            ids=ids
+        )
+
     def search_reports(self, query: str, user_id: int, n_results: int = 3):
         """Search similar reports for a specific user"""
         results = self.reports_collection.query(

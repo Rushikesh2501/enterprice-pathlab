@@ -67,6 +67,28 @@ async def upload_report(
         await db.commit()
         await db.refresh(new_report)
         
+        # RAG Ingestion Pipeline
+        try:
+            from app.utils.pdf_extractor import extract_text_from_pdf, split_text_into_chunks
+            from app.services.embeddings.chroma import chroma_service
+            
+            # Extract plain text from PDF bytes
+            extracted_text = extract_text_from_pdf(content)
+            if extracted_text:
+                # Split text into logical chunks
+                chunks = split_text_into_chunks(extracted_text)
+                if chunks:
+                    # Ingest chunks into ChromaDB
+                    chroma_service.add_report_chunks(
+                        user_id=user_id,
+                        report_id=new_report.id,
+                        chunks=chunks
+                    )
+                    print(f"RAG Ingestion Successful: Indexed {len(chunks)} chunks for report ID {new_report.id}")
+        except Exception as rag_err:
+            # Fail gracefully so the database transaction is still preserved
+            print(f"Non-fatal RAG ingestion failure: {rag_err}")
+        
         return {
             "message": "Report successfully uploaded, assigned, and appointment marked as Completed.",
             "report_id": new_report.id,

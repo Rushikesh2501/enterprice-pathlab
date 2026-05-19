@@ -27,9 +27,10 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: Optional[str] = None
     CHROMA_DB_DIR: str = "./chroma_db"
     
+
     # Azure Storage Settings
     AZURE_STORAGE_CONNECTION_STRING: Optional[str] = None
-    AZURE_STORAGE_SHARE_NAME: str = "reports"
+    AZURE_STORAGE_CONTAINER_NAME: str = "reports"
     
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)
 

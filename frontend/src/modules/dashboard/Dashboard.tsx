@@ -166,6 +166,7 @@ export const Dashboard = () => {
               <Button 
                 variant="contained" 
                 fullWidth 
+                onClick={() => window.dispatchEvent(new CustomEvent('open-ai-chat'))}
                 sx={{ 
                   bgcolor: 'white', 
                   color: 'primary.main',
