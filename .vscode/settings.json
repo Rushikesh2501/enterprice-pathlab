@@ -1,0 +1,7 @@
+{
+  "python.defaultInterpreterPath": "/Users/rushikeshjagtap/Developer/enterprice-pathlab/venv/bin/python",
+  "python.interpreterPath": "/Users/rushikeshjagtap/Developer/enterprice-pathlab/venv/bin/python",
+  "python.analysis.extraPaths": [
+    "/Users/rushikeshjagtap/Developer/enterprice-pathlab"
+  ]
+}

@@ -1,5 +1,5 @@
+# pyrefly: ignore [missing-import]
 import chromadb
-from chromadb.config import Settings
 from app.core.config import settings
 import uuid
 
