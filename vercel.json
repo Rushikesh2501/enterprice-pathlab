@@ -9,18 +9,14 @@
       }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "https://enterprice-pathlab.onrender.com/api/$1"
+      "source": "/api/:match*",
+      "destination": "https://enterprice-pathlab.onrender.com/api/:match*"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "/frontend/assets/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/index.html"
+      "source": "/((?!api|assets|logo.svg).*)",
+      "destination": "/frontend/index.html"
     }
   ]
 }
